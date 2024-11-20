@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 // but if we use {children} we can also render the server comp\
 import qs from "query-string";
 import { Input } from "@/components/ui/input";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon,X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -17,7 +17,7 @@ export const Search = () => {
     if (!value) return;
     const url = qs.stringifyUrl(
       {
-        url: "/",
+        url: "/search",
         query: {
           term: value,
         },
@@ -26,7 +26,11 @@ export const Search = () => {
     );
     //localhost:3000?term=value
     router.push(url);
-  };
+    };
+    // clear search box when user click the icon
+    const handleClear = () => {
+        setValue("")
+    }
   return (
     <form
       onSubmit={handleSearchForm}
@@ -38,6 +42,10 @@ export const Search = () => {
         onChange={(e) => setValue(e.target.value)}
         className="rounded-r-none"
       />
+          {value && <X className="absolute top-2.5 right-14 hover: w-5 text-muted-foreground cursor-pointer
+          hover:opacity-75 transition"
+           onClick={handleClear}
+          />}
       <Button
         type="submit"
         size="sm"
