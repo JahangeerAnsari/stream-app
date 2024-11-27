@@ -53,8 +53,8 @@ export async function POST(req:Request) {
     });
   }
   
-  if (eventType === "user.updated") {
-    await db.user.update({
+  if (eventType === 'user.updated') {
+   await db.user.update({
       where: {
         externalUserId: payload.data.id,
       },
