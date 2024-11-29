@@ -2,6 +2,7 @@ import { isFollowingUser } from "@/lib/follow-service";
 import { getUserByUsername } from "@/lib/user-service";
 import { notFound } from "next/navigation";
 import { Actions } from "./_components/action";
+import { isBlockedByUser } from "@/lib/block-service";
 
 
 interface UserNameProps{
@@ -16,14 +17,17 @@ const UserPage = async ({ params }: UserNameProps) => {
         notFound()
     }
     const isfollowing = await isFollowingUser(user?.id);
-    
-    
-    return (
-      <div>
-        User Page {params.username} {user?.id}
-        following {JSON.stringify(isfollowing)}
-            <Actions isfollowing={isfollowing} userId={user.id} />
-      </div>
-    );
+    const isBlocked = await isBlockedByUser(user.id);
+    if (isBlocked) {
+        notFound()
+    }
+      return (
+        <div className="flex flex-col gap-y-4">
+          <p>is blocked by user {`${isBlocked}`}</p>
+          User Page {params.username} {user?.id}
+          following {JSON.stringify(isfollowing)}
+          <Actions isfollowing={isfollowing} userId={user.id} />
+        </div>
+      );
 };
 export default UserPage;

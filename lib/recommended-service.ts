@@ -29,6 +29,15 @@ export const getRecommended = async () => {
                 }
               }
             }
+          }, {
+            // not showing the blocked user in recommendairon
+            NOT: {
+              blocking: {
+                some: {
+                  blockedId:userId
+                }
+              }
+            }
           }
         ],
       },
