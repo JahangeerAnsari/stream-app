@@ -35,7 +35,7 @@ export const Actions = ({ isfollowing, userId }: ActionsProps) => {
      }
   return (
     <Button
-      disabled={isPending}
+      disabled={isPending }
       onClick={onClick}
       variant="primary"
     >
